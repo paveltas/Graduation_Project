@@ -1,14 +1,15 @@
 from rest_framework import serializers
-from .models import User, Game
+
+from .models import Level, Score
 
 
-class UserSerializer(serializers.ModelSerializer):
+class LevelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['id', 'username', 'total_score']
+        model = Level
+        fields = '__all__'
 
 
-class GameSerializer(serializers.ModelSerializer):
+class ScoreSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Game
-        fields = ['user', 'level1_score', 'level2_score', 'level3_score']
+        model = Score
+        fields = '__all__'

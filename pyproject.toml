@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "graduation-project"
+version = "0.1.0"
+description = ""
+authors = ["paveltas <124336776+paveltas@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "graduation_project"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.3"
+djangorestframework = "^3.14.0"
+uuid = "^1.30"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

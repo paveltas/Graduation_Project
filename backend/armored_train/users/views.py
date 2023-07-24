@@ -1,13 +1,14 @@
 from rest_framework.generics import RetrieveAPIView
-from .models import User
-from .serializers import UserSerializer
+
+from .models import Level, Score
+from .serializers import LevelSerializer, ScoreSerializer
 
 
-class UserDetailView(RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class LevelDetailView(RetrieveAPIView):
+    queryset = Level.objects.all()
+    serializer_class = LevelSerializer
 
 
-class GameDetailView(RetrieveAPIView):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer
+class ScoreDetailView(RetrieveAPIView):
+    queryset = Score.objects.all()
+    serializer_class = ScoreSerializer
