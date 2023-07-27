@@ -10,7 +10,7 @@ class Level(models.Model):
 class Score(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
-    points = models.IntegerField(default=0)
+    points = models.IntegerField()
 
     class Meta:
         constraints = [

@@ -4,11 +4,11 @@ from .models import Level, Score
 from .serializers import LevelSerializer, ScoreSerializer
 
 
-class LevelDetailView(RetrieveAPIView):
+class LevelListView(RetrieveAPIView):
     queryset = Level.objects.all()
     serializer_class = LevelSerializer
 
 
-class ScoreDetailView(RetrieveAPIView):
+class ScoreListView(RetrieveAPIView):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
