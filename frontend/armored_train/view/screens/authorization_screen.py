@@ -2,7 +2,7 @@ import pygame
 
 from frontend.armored_train.view.models.authorization_model import AuthorizationModel
 from frontend.armored_train.view.screens.screen import Screen
-from frontend.armored_train.view.widgets.button_widget import ButtonWidget
+from frontend.armored_train.view.widgets.button_widgets import AuthorizationButtonWidget
 from frontend.armored_train.view.widgets.input_text_widget import InputTextWidget
 from frontend.armored_train.view.widgets.widget_utils import WidgetUtils
 
@@ -15,31 +15,27 @@ class AuthorizationScreen(Screen):
         self.font_title = pygame.font.Font("../../game/assets/fonts/Oswald-Light.ttf", 72)
         self.font_label = pygame.font.Font("../../game/assets/fonts/Oswald-Light.ttf", 36)
         self.font_input = pygame.font.Font("../../game/assets/fonts/Oswald-Light.ttf", 36)
-        self.WHITE = (255, 255, 255)
+        self.WHITE = 255, 255, 255
 
         self.center_x = WidgetUtils(self.width, 0)
         self.authorization_input = InputTextWidget(800, 400, 400, 50, self.screen)
-        self.authorization_button = ButtonWidget(800, 900, 200, 50, self.screen)
+        self.authorization_button = AuthorizationButtonWidget(800, 900, 200, 50, self.screen)
 
     def draw(self):
         self.screen.blit(self.background, (0, 0))
 
         title_text = self.font_title.render("Авторизация", True, self.WHITE)
-        self.screen.blit(title_text, (self.center_x.center_on_x_and_y(title_text), 100))
+        self.screen.blit(title_text, (self.center_x.align_center(title_text), 100))
 
         username_label = self.font_label.render("Почта:", True, self.WHITE)
         password_label = self.font_label.render("Пароль:", True, self.WHITE)
         self.screen.blit(username_label, (600, 400))
         self.screen.blit(password_label, (600, 500))
 
-        self.authorization_input.x = self.center_x.center_on_x_and_y(self.authorization_input)
-        self.authorization_input.color = (130, 130, 130)
+        self.authorization_input.x = self.center_x.align_center(self.authorization_input)
         self.authorization_input.draw()
 
-        self.authorization_button.x = self.center_x.center_on_x_and_y(self.authorization_button)
-        self.authorization_button.color = (130, 130, 130)
-        self.authorization_button.text_font = self.font_input
-        self.authorization_button.caption = 'Вход'
+        self.authorization_button.x = self.center_x.align_center(self.authorization_button)
         self.authorization_button.draw()
 
         pygame.display.flip()

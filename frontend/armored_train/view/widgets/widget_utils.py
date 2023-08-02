@@ -3,7 +3,7 @@ class WidgetUtils:
         self.window_width = window_width
         self.window_height = window_height
 
-    def center_on_x_and_y(self, widget):
+    def align_center(self, widget):
         widget_width, widget_height = widget.get_size()
         x = (self.window_width - widget_width) // 2
         y = (self.window_height - widget_height) // 2

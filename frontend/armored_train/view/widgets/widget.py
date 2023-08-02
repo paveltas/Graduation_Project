@@ -5,7 +5,7 @@ import pygame
 
 class Widget(ABC):
 
-    def __init__(self, x, y, width, height, screen, color=(0, 0, 0), caption=None, border_width=2,
+    def __init__(self, x, y, width, height, screen, color=(0, 0, 0), border_width=2,
                  text_font=(None, 36), font_color=(250, 250, 250)):
         self.x = x
         self.y = y
@@ -13,7 +13,6 @@ class Widget(ABC):
         self.height = height
         self.screen = screen
         self.color = color
-        self.caption = caption
         self.border_width = border_width
         self.text_font = pygame.font.Font(*text_font)
         self.font_color = font_color
@@ -25,6 +24,5 @@ class Widget(ABC):
     def draw(self):
         pass
 
-    # @abstractmethod
-    # def handle_event(self):
-    #     pass
+    def handle_event(self):
+        pass
