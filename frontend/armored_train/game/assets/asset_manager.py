@@ -28,16 +28,16 @@ class AssetManager:
             del self.__assets[asset_type][asset_name]
 
 
-asset_manager = AssetManager("assets.json")
-asset_manager.load_assets()
-
-new_assets = [
-
-]
-
-
-for asset in new_assets:
-    asset_manager.add_asset(asset["type"], asset["name"], asset["path"])
-
-
-asset_manager.save_assets()
+# asset_manager = AssetManager("assets.json")
+# asset_manager.load_assets()
+#
+# new_assets = [
+#
+# ]
+#
+#
+# for asset in new_assets:
+#     asset_manager.add_asset(asset["type"], asset["name"], asset["path"])
+#
+#
+# asset_manager.save_assets()

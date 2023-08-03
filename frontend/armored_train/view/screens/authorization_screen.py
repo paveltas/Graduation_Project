@@ -33,9 +33,11 @@ class AuthorizationScreen(Screen):
         self.screen.blit(password_label, (600, 500))
 
         self.authorization_input.x = self.center_x.align_center(self.authorization_input)
+        self.authorization_input.text_font = self.font_input
         self.authorization_input.draw()
 
         self.authorization_button.x = self.center_x.align_center(self.authorization_button)
+        self.authorization_button.text_font = self.font_input
         self.authorization_button.draw()
 
         pygame.display.flip()
