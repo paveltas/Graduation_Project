@@ -35,9 +35,7 @@ class AssetManager:
 #
 # ]
 #
-#
 # for asset in new_assets:
 #     asset_manager.add_asset(asset["type"], asset["name"], asset["path"])
-#
 #
 # asset_manager.save_assets()

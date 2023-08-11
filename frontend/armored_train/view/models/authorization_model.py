@@ -6,16 +6,13 @@ class AuthorizationModel:
         self.username = ""
         self.password = ""
         self.active_input_box = None
+        self.auth_button_active = 'inactive'
 
         self.input_boxes = [
             {
-                'rect': pygame.Rect(800, 400, 400, 50),
-                'active': False,
                 'text': ''
             },
             {
-                'rect': pygame.Rect(800, 500, 400, 50),
-                'active': False,
                 'text': ''
             }
         ]

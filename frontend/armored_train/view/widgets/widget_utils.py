@@ -3,12 +3,14 @@ class WidgetUtils:
         self.window_width = window_width
         self.window_height = window_height
 
-    def align_center(self, widget):
-        widget_width, widget_height = widget.get_size()
-        x = (self.window_width - widget_width) // 2
-        y = (self.window_height - widget_height) // 2
-        if x > 0 and y > 0:
-            return x, y
-        if x > 0 or y > 0:
-            return x if x > 0 else y
-        raise ValueError("Недопустимые значения x и y для центрирования виджета.")
+    @staticmethod
+    def align_center(x, y, surface, widget, center_x=False, center_y=False):
+        if center_x and center_y:
+            return x + (surface.get_width() - widget.get_width()) // 2, y + (
+                        surface.get_height() - widget.get_height()) // 2
+
+        if center_x:
+            return x + (surface.get_width() - widget.get_width()) // 2
+
+        if center_y:
+            return y + (surface.get_height() - widget.get_height()) // 2

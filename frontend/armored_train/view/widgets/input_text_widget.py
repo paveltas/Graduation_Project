@@ -1,24 +1,23 @@
 import pygame
 
-from frontend.armored_train.view.models.authorization_model import AuthorizationModel
 from frontend.armored_train.view.widgets.widget import Widget
 
 
 class InputTextWidget(Widget):
-    def __init__(self, x, y, width, height, screen):
-        super().__init__(x, y, width, height, screen)
+    def __init__(self, x, y, width, height, screen, authorization_model, asset_manager):
+        super().__init__(x, y, width, height, screen, asset_manager)
         self.username_rect = None
         self.password_rect = None
-        self.model = AuthorizationModel()
         self.active_input_field = None
+        self.model = authorization_model
 
     def draw(self):
         username_rect_color = (130, 130, 130)
         password_rect_color = (130, 130, 130)
 
-        if self.active_input_field == 'username':
+        if self.model.active_input_box == self.model.input_boxes[0]:
             username_rect_color = (255, 0, 0)
-        elif self.active_input_field == 'password':
+        elif self.model.active_input_box == self.model.input_boxes[1]:
             password_rect_color = (255, 0, 0)
 
         self.username_rect = pygame.draw.rect(self.screen, username_rect_color,
@@ -28,9 +27,9 @@ class InputTextWidget(Widget):
                                               (self.x, self.y + 100, self.width, self.height),
                                               self.border_width)
 
-        username_input = self.text_font.render('Hello', True, self.font_color)
-        password_input = self.text_font.render("*" * len('Hello'), True, self.font_color)
-        self.screen.blit(username_input, (self.x + 5, self.y))
+        username_input = self.text_font.render(self.model.input_boxes[0]['text'], True, self.font_color)
+        password_input = self.text_font.render("*" * len(self.model.input_boxes[1]['text']), True, self.font_color)
+        self.screen.blit(username_input, (self.x + 5, self.y - 3))
         self.screen.blit(password_input, (self.x + 5, self.y + 105))
 
         self.handle_event()
@@ -39,7 +38,9 @@ class InputTextWidget(Widget):
         mouse_pos = pygame.mouse.get_pos()
         left_click = pygame.mouse.get_pressed()[0]
         if self.username_rect.collidepoint(mouse_pos) and left_click:
-            self.active_input_field = 'username'
+            self.model.active_input_box = self.model.input_boxes[0]
         elif self.password_rect.collidepoint(mouse_pos) and left_click:
-            self.active_input_field = 'password'
+            self.model.active_input_box = self.model.input_boxes[1]
+        elif not self.password_rect.collidepoint(mouse_pos) and left_click:
+            self.model.active_input_box = None
 
