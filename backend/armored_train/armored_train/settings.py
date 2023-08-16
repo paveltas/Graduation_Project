@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
+    'rest_framework',
+    'users',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +125,22 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+
+    ],
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'username',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'TOKEN_AUTHENTICATION': {
+        'TOKEN_CREATE': 'auth/token/create/',
+        'TOKEN_DESTROY': 'auth/token/destroy/',
+        'SERIALIZERS': {
+                'user_create': 'path.to.your.custom.user_create_serializer',
+            },
+    },
+}

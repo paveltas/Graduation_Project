@@ -18,9 +18,6 @@ class Widget(ABC):
         self.font_color = font_color
         self.text_font = pygame.font.Font(asset_manager.get_asset_path('fonts', 'Oswald-Light'), 36)
 
-    def get_width(self):
-        return self.width, self.height
-
     @abstractmethod
     def draw(self):
         pass
