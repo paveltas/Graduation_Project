@@ -10,6 +10,7 @@ class LevelSerializer(serializers.ModelSerializer):
 
 
 class ScoreSerializer(serializers.ModelSerializer):
+    player_name = serializers.CharField(source='player.username', read_only=True)
     class Meta:
         model = Score
-        fields = '__all__'
+        fields = ['player_name', 'level', 'points']

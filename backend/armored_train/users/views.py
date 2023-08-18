@@ -3,7 +3,6 @@ import json
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from rest_framework.authtoken.models import Token
-from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -11,14 +10,24 @@ from .models import Level, Score
 from .serializers import LevelSerializer, ScoreSerializer
 
 
-class LevelListView(RetrieveAPIView):
-    queryset = Level.objects.all()
-    serializer_class = LevelSerializer
+class LevelListView(APIView):
+    def get(self, request, pk):
+        try:
+            level = Level.objects.get(pk=pk)
+            serializer = LevelSerializer(level)
+            return Response(serializer.data)
+        except Level.DoesNotExist:
+            return Response({'error': 'Level does not exist'}, status=404)
 
 
-class ScoreListView(RetrieveAPIView):
-    queryset = Score.objects.all()
-    serializer_class = ScoreSerializer
+class ScoreListView(APIView):
+    def get(self, request, pk):
+        try:
+            score = Score.objects.get(pk=pk)
+            serializer = ScoreSerializer(score)
+            return Response(serializer.data)
+        except Score.DoesNotExist:
+            return Response({'error': 'Score does not exist'}, status=404)
 
 
 class AuthorizationView(APIView):
