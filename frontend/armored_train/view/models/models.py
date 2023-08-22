@@ -18,6 +18,10 @@ class MainMenuModel:
 
 class RatingModel:
     def __init__(self):
+        self.login = 'pavel'
+        self.user_place = 0
+        self.user_overall_score = 0
+        self.users_overall_score = {}
         self.count = 0
         self.player = None
         self.level = None

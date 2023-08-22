@@ -30,6 +30,16 @@ class ScoreListView(APIView):
             return Response({'error': 'Score does not exist'}, status=404)
 
 
+class OverallScoreListView(APIView):
+    def get(self, request):
+        try:
+            score = Score.objects.all()
+            serializer = ScoreSerializer(score, many=True)
+            return Response(serializer.data)
+        except Score.DoesNotExist:
+            return Response({'error': 'Score does not exist'}, status=404)
+
+
 class AuthorizationView(APIView):
     def post(self, request):
         data = json.loads(request.body)

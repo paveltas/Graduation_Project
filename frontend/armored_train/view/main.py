@@ -36,8 +36,11 @@ def main():
 
     screen_manager.set_active_screen('Main Menu Screen')
 
+    clock = pygame.time.Clock()
+
     running = True
     while running:
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
