@@ -6,11 +6,12 @@ from frontend.armored_train.view.widgets.widget import Widget
 class ButtonWidget(Widget):
     def __init__(self, x, y, width, height, screen, asset_manager, text):
         super().__init__(x, y, width, height, screen, asset_manager, text)
+        self.button = None
         self.button_active = False
 
     def draw(self):
-        button = pygame.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height),
-                                  self.border_width)
+        self.button = pygame.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height),
+                                       self.border_width)
         button_text = self.text_font.render(self.text, True, self.font_color)
 
         text_x, text_y = self.x + (self.width - button_text.get_width()) // 2, self.y + (
@@ -18,7 +19,10 @@ class ButtonWidget(Widget):
 
         self.screen.blit(button_text, (text_x, text_y - 4))
 
-        mouse_over_button = button.collidepoint(pygame.mouse.get_pos())
+        self.__handle_event()
+
+    def __handle_event(self):
+        mouse_over_button = self.button.collidepoint(pygame.mouse.get_pos())
         left_click = pygame.mouse.get_pressed()[0]
         if mouse_over_button and left_click:
             self.button_active = True
@@ -32,84 +36,100 @@ class ButtonWidget(Widget):
 
 
 class AuthorizationButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, authorization_model, asset_manager, text):
+    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
         super().__init__(x, y, width, height, screen, asset_manager, text)
-        self.model = authorization_model
+        self.__model = model
 
     def draw(self):
         super().draw()
 
         if self.button_active:
-            self.model.auth_button_active = True
+            self.__model.auth_button_active = True
         else:
-            self.model.auth_button_active = False
+            self.__model.auth_button_active = False
 
 
 class RegistrationButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, authorization_model, asset_manager, text):
+    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
         super().__init__(x, y, width, height, screen, asset_manager, text)
-        self.model = authorization_model
+        self.__model = model
 
     def draw(self):
         super().draw()
 
         if self.button_active:
-            self.model.reg_button_active = True
+            self.__model.reg_button_active = True
         else:
-            self.model.reg_button_active = False
+            self.__model.reg_button_active = False
 
 
 class NewGameButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, main_menu_model, asset_manager, text):
+    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
         super().__init__(x, y, width, height, screen, asset_manager, text)
-        self.model = main_menu_model
+        self.__model = model
 
     def draw(self):
         super().draw()
 
         if self.button_active:
-            self.model.new_game_button_active = True
+            self.__model.new_game_button_active = True
         else:
-            self.model.new_game_button_active = False
+            self.__model.new_game_button_active = False
 
 
 class ContinueButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, main_menu_model, asset_manager, text):
+    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
         super().__init__(x, y, width, height, screen, asset_manager, text)
-        self.model = main_menu_model
+        self.__model = model
 
     def draw(self):
         super().draw()
 
         if self.button_active:
-            self.model.continue_button_active = True
+            self.__model.continue_button_active = True
         else:
-            self.model.continue_button_active = False
+            self.__model.continue_button_active = False
 
 
 class LevelSelectionButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, main_menu_model, asset_manager, text):
+    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
         super().__init__(x, y, width, height, screen, asset_manager, text)
-        self.model = main_menu_model
+        self.__model = model
 
     def draw(self):
         super().draw()
 
         if self.button_active:
-            self.model.level_selection_button_active = True
+            self.__model.level_selection_button_active = True
         else:
-            self.model.level_selection_button_active = False
+            self.__model.level_selection_button_active = False
 
 
 class RatingButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, main_menu_model, asset_manager, text):
+    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
         super().__init__(x, y, width, height, screen, asset_manager, text)
-        self.model = main_menu_model
+        self.__model = model
 
     def draw(self):
         super().draw()
 
         if self.button_active:
-            self.model.rating_button_active = True
+            self.__model.rating_button_active = True
         else:
-            self.model.rating_button_active = False
+            self.__model.rating_button_active = False
+
+
+class BackButtonWidget(ButtonWidget):
+    def __init__(self, x, y, width, height, screen, model, asset_manager, text, font_color=None):
+        super().__init__(x, y, width, height, screen, asset_manager, text)
+        if font_color is not None:
+            self.font_color = font_color
+        self.__model = model
+
+    def draw(self):
+        super().draw()
+
+        if self.button_active:
+            self.__model.back_button_active = True
+        else:
+            self.__model.back_button_active = False

@@ -17,10 +17,6 @@ class ScreenManager:
         if self.active_screen:
             self.controllers[self.active_screen.caption].handle_event(event)
 
-    # def update(self):
-    #     if self.active_screen:
-    #         self.active_screen.update()
-
     def draw(self):
         if self.active_screen:
             self.active_screen.draw()

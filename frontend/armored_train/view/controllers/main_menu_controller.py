@@ -14,6 +14,7 @@ class MainMenuController(Controller):
             print('is active continue_button_active')
 
         if self.model.level_selection_button_active:
+            self.screen_manager.set_active_screen('Level Selection Screen')
             print('is active level_selection_button_active')
 
         if self.model.rating_button_active:

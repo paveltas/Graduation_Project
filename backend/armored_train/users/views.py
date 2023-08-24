@@ -21,7 +21,8 @@ class LevelListView(APIView):
 
 
 class ScoreListView(APIView):
-    def get(self, request, pk):
+    @staticmethod
+    def get(request, pk):
         try:
             score = Score.objects.get(pk=pk)
             serializer = ScoreSerializer(score)
@@ -31,7 +32,8 @@ class ScoreListView(APIView):
 
 
 class OverallScoreListView(APIView):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         try:
             score = Score.objects.all()
             serializer = ScoreSerializer(score, many=True)
@@ -41,7 +43,8 @@ class OverallScoreListView(APIView):
 
 
 class AuthorizationView(APIView):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         data = json.loads(request.body)
         username = data.get('username')
         password = data.get('password')
@@ -54,7 +57,8 @@ class AuthorizationView(APIView):
 
 
 class RegistrationView(APIView):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         data = json.loads(request.body)
         username = data.get('username')
         password = data.get('password')

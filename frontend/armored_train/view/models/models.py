@@ -14,6 +14,7 @@ class MainMenuModel:
         self.continue_button_active = False
         self.level_selection_button_active = False
         self.rating_button_active = False
+        self.back_button_active = False
 
 
 class RatingModel:
@@ -21,8 +22,14 @@ class RatingModel:
         self.login = 'pavel'
         self.user_place = 0
         self.user_overall_score = 0
-        self.users_overall_score = {}
+        self.users_overall_score = None
+        self.levels_score = {}
         self.count = 0
-        self.player = None
         self.level = None
         self.points = None
+        self.back_button_active = False
+
+
+class LevelSelectionModel:
+    def __init__(self):
+        self.back_button_active = False

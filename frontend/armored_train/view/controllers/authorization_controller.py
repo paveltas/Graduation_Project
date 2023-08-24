@@ -54,8 +54,5 @@ class AuthorizationController(Controller):
                 elif len(self.model.input_fields[self.model.active_box]) < 20:
                     self.model.input_fields[self.model.active_box] += event.unicode
 
-        if self.model.auth_button_active:
-            self.authorize()
-
-        if self.model.reg_button_active:
+        if self.model.auth_button_active or self.model.reg_button_active:
             self.authorize()

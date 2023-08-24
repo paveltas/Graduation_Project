@@ -2,10 +2,13 @@ import pygame
 
 from frontend.armored_train.game.assets.asset_manager import AssetManager
 from frontend.armored_train.view.controllers.authorization_controller import AuthorizationController
+from frontend.armored_train.view.controllers.level_selection_controller import LevelSelectionController
 from frontend.armored_train.view.controllers.main_menu_controller import MainMenuController
 from frontend.armored_train.view.controllers.rating_controller import RatingController
-from frontend.armored_train.view.models.models import MainMenuModel, RatingModel, AuthorizationModel
+from frontend.armored_train.view.models.models import MainMenuModel, RatingModel, AuthorizationModel, \
+    LevelSelectionModel
 from frontend.armored_train.view.screens.authorization_screen import AuthorizationScreen
+from frontend.armored_train.view.screens.level_selection_screen import LevelSelectionScreen
 from frontend.armored_train.view.screens.main_menu_screen import MainMenuScreen
 from frontend.armored_train.view.screens.rating_screen import RatingScreen
 from frontend.armored_train.view.screens.screen_manager import ScreenManager
@@ -34,6 +37,11 @@ def main():
     rating_controller = RatingController(model, rating_screen, screen_manager)
     screen_manager.add_screen_add_controller(rating_screen, rating_controller)
 
+    model = LevelSelectionModel()
+    level_selection_screen = LevelSelectionScreen(1920, 1080, 'Level Selection Screen', model, asset_manager)
+    level_selection_controller = LevelSelectionController(model, level_selection_screen, screen_manager)
+    screen_manager.add_screen_add_controller(level_selection_screen, level_selection_controller)
+
     screen_manager.set_active_screen('Main Menu Screen')
 
     clock = pygame.time.Clock()
@@ -50,7 +58,6 @@ def main():
 
             screen_manager.handle_event(event)
 
-        # screen_manager.update()
         screen_manager.draw()
 
     pygame.quit()
