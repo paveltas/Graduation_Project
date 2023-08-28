@@ -32,7 +32,6 @@ class AssetManager:
 # asset_manager.load_assets()
 #
 # new_assets = [
-#
 # ]
 #
 # for asset in new_assets:

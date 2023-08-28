@@ -33,3 +33,7 @@ class RatingModel:
 class LevelSelectionModel:
     def __init__(self):
         self.back_button_active = False
+
+
+class FirstLevelModel:
+    pass
