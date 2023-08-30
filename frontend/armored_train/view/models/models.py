@@ -36,4 +36,5 @@ class LevelSelectionModel:
 
 
 class FirstLevelModel:
-    pass
+    def __init__(self):
+        self.enemies = []

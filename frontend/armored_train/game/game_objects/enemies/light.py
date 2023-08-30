@@ -2,17 +2,20 @@ import pygame
 
 
 class LightEnemyObject:
-    def __init__(self, x, y, screen):
+    def __init__(self, x, y, screen, asset_manager):
+        self.__screen = screen
+        self.__asset_manager = asset_manager
         self.x = x
         self.y = y
-        self.__screen = screen
-        self.__surface = pygame.Surface((20, 30), pygame.SRCALPHA)
         self.health = 50
         self.damage = 15
-        self.speed = 30
+        self.speed = 5
         self.zone = 1
 
+        self.__light_enemy_png = pygame.image.load(
+            self.__asset_manager.get_asset_path("images", "light_enemy")).convert_alpha()
+        self.light_enemy_rect = self.__light_enemy_png.get_rect(topleft=(self.x, self.y))
+
     def draw(self):
-        rect = pygame.Rect(self.x, self.y, 20, 30)
-        self.__surface.fill((130, 130, 130, 200))
-        self.__screen.blit(self.__surface, rect)
+        self.light_enemy_rect.y -= self.speed
+        self.__screen.blit(self.__light_enemy_png, self.light_enemy_rect)

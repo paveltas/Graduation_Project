@@ -2,14 +2,18 @@ import pygame
 
 
 class EngineeringWagonObject:
-    def __init__(self, x, y, screen):
+    def __init__(self, x, y, screen, asset_manager):
+        self.__screen = screen
+        self.__asset_manager = asset_manager
         self.x = x
         self.y = y
-        self.__screen = screen
-        self.__surface = pygame.Surface((50, 90), pygame.SRCALPHA)
+        self.armor = 150
+        self.health = 200
         self.slots_on_the_top = 5
 
+        self.__engineering_wagon_png = pygame.image.load(
+            self.__asset_manager.get_asset_path("images", "engineering_wagon")).convert_alpha()
+        self.engineering_wagon_rect = self.__engineering_wagon_png.get_rect(topleft=(self.x, self.y))
+
     def draw(self):
-        rect = pygame.Rect(self.x, self.y, 50, 90)
-        self.__surface.fill((130, 130, 130, 200))
-        self.__screen.blit(self.__surface, rect)
+        self.__screen.blit(self.__engineering_wagon_png, self.engineering_wagon_rect)

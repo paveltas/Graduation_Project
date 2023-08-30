@@ -1,18 +1,24 @@
 import pygame
 
 
-class MediumEnemyObject:
-    def __init__(self, x, y, screen):
+class HeavyEnemyObject:
+    def __init__(self, x, y, screen, asset_manager):
+        self.__screen = screen
+        self.__asset_manager = asset_manager
         self.x = x
         self.y = y
-        self.__screen = screen
-        self.__surface = pygame.Surface((30, 50), pygame.SRCALPHA)
         self.health = 200
         self.damage = 70
-        self.speed = 10
+        self.speed = 1
         self.zone = 2
 
+        self.__heavy_enemy_png = pygame.image.load(
+            self.__asset_manager.get_asset_path("images", "heavy_enemy")).convert_alpha()
+        self.heavy_enemy_rect = self.__heavy_enemy_png.get_rect(topleft=(self.x, self.y))
+
     def draw(self):
-        rect = pygame.Rect(self.x, self.y, 50, 50)
-        self.__surface.fill((130, 130, 130, 200))
-        self.__screen.blit(self.__surface, rect)
+        self.heavy_enemy_rect.y -= self.speed
+        self.__screen.blit(self.__heavy_enemy_png, self.heavy_enemy_rect)
+
+    def update(self):
+        self.y -= 10

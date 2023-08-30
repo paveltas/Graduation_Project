@@ -31,8 +31,13 @@ class AssetManager:
 # asset_manager = AssetManager("assets.json")
 # asset_manager.load_assets()
 #
-# new_assets = [
-# ]
+# new_assets = [{"type": 'images', "name": 'heavy_enemy',
+#                "path": "C:\\Users\\user\\PycharmProjects\\Graduation_Project\\frontend\\armored_train\\game\\assets\\images\\heavy_enemy.png"},
+#               {"type": 'images', "name": 'light_enemy',
+#                "path": "C:\\Users\\user\\PycharmProjects\\Graduation_Project\\frontend\\armored_train\\game\\assets\\images\\light_enemy.png"},
+#               {"type": 'images', "name": 'medium_enemy',
+#                "path": "C:\\Users\\user\\PycharmProjects\\Graduation_Project\\frontend\\armored_train\\game\\assets\\images\\medium_enemy.png"}
+#               ]
 #
 # for asset in new_assets:
 #     asset_manager.add_asset(asset["type"], asset["name"], asset["path"])
