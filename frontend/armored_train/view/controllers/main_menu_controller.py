@@ -8,6 +8,7 @@ class MainMenuController(Controller):
     def handle_event(self, event):
 
         if self.model.new_game_button_active:
+            self.screen_manager.set_active_screen('First Level Screen')
             print('is active new_game_button_active')
 
         if self.model.continue_button_active:

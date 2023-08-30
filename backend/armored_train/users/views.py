@@ -10,27 +10,6 @@ from .models import Level, Score
 from .serializers import LevelSerializer, ScoreSerializer
 
 
-class LevelListView(APIView):
-    def get(self, request, pk):
-        try:
-            level = Level.objects.get(pk=pk)
-            serializer = LevelSerializer(level)
-            return Response(serializer.data)
-        except Level.DoesNotExist:
-            return Response({'error': 'Level does not exist'}, status=404)
-
-
-class ScoreListView(APIView):
-    @staticmethod
-    def get(request, pk):
-        try:
-            score = Score.objects.get(pk=pk)
-            serializer = ScoreSerializer(score)
-            return Response(serializer.data)
-        except Score.DoesNotExist:
-            return Response({'error': 'Score does not exist'}, status=404)
-
-
 class OverallScoreListView(APIView):
     @staticmethod
     def get(request):
