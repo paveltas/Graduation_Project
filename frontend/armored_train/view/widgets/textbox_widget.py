@@ -4,9 +4,9 @@ from frontend.armored_train.view.widgets.widget import Widget
 
 
 class TextBoxWidget(Widget):
-    def __init__(self, x, y, width, height, screen, asset_manager, text, font_color=None, center_x=False,
+    def __init__(self, x, y, width, height, screen, text, font_color=None, center_x=False,
                  center_y=False):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+        super().__init__(x, y, width, height, screen, text)
         if font_color is not None:
             self.font_color = font_color
         self.center_x = center_x
@@ -35,8 +35,8 @@ class TextBoxWidget(Widget):
 
 
 class PersonalOverallRatingTextWidget(TextBoxWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text=None, center_x=False, center_y=False):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text=None, center_x=False, center_y=False):
+        super().__init__(x, y, width, height, screen, text)
         self.__model = model
         self.center_x = center_x
         self.center_y = center_y
@@ -56,8 +56,8 @@ class PersonalOverallRatingTextWidget(TextBoxWidget):
 
 
 class GeneralOverallRatingTextWidget(TextBoxWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text=None, center_x=False, center_y=False):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text=None, center_x=False, center_y=False):
+        super().__init__(x, y, width, height, screen, text)
         self.__main_rect = None
         self.__model = model
         self.__scroll_position = 0
@@ -102,8 +102,8 @@ class GeneralOverallRatingTextWidget(TextBoxWidget):
 
 
 class LevelsRatingTextWidget(TextBoxWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text=None, center_x=False, center_y=False):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text=None, center_x=False, center_y=False):
+        super().__init__(x, y, width, height, screen, text)
         self.__main_rect = None
         self.__login = model.login
         self.__levels_score = model.levels_score

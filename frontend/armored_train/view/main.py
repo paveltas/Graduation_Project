@@ -21,7 +21,7 @@ def main():
 
     screen_manager = ScreenManager()
 
-    asset_manager = AssetManager("../game/assets/assets.json")
+    asset_manager = AssetManager("../game/assets/assets.yaml")
     asset_manager.load_assets()
 
     model = MainMenuModel()
@@ -33,6 +33,8 @@ def main():
     authorization_screen = AuthorizationScreen(1920, 1080, 'Authorization Screen', model, asset_manager)
     authorization_controller = AuthorizationController(model, authorization_screen, screen_manager)
     screen_manager.add_screen_add_controller(authorization_screen, authorization_controller)
+    print(authorization_screen.__dict__)
+    # print(authorization_screen.width)
 
     model = RatingModel()
     rating_screen = RatingScreen(1920, 1080, 'Rating Screen', model, asset_manager)
@@ -49,7 +51,7 @@ def main():
     first_level_controller = FirstLevelController(model, first_level_screen, screen_manager)
     screen_manager.add_screen_add_controller(first_level_screen, first_level_controller)
 
-    screen_manager.set_active_screen('Authorization Screen')
+    screen_manager.set_active_screen('Main Menu Screen')
 
     clock = pygame.time.Clock()
 

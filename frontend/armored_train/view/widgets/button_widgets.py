@@ -4,8 +4,8 @@ from frontend.armored_train.view.widgets.widget import Widget
 
 
 class ButtonWidget(Widget):
-    def __init__(self, x, y, width, height, screen, asset_manager, text):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, text):
+        super().__init__(x, y, width, height, screen, text)
         self.button_active = False
 
     def draw(self):
@@ -35,8 +35,8 @@ class ButtonWidget(Widget):
 
 
 class AuthorizationButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text):
+        super().__init__(x, y, width, height, screen, text)
         self.__model = model
 
     def draw(self):
@@ -49,8 +49,8 @@ class AuthorizationButtonWidget(ButtonWidget):
 
 
 class RegistrationButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text):
+        super().__init__(x, y, width, height, screen, text)
         self.__model = model
 
     def draw(self):
@@ -63,8 +63,8 @@ class RegistrationButtonWidget(ButtonWidget):
 
 
 class NewGameButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text):
+        super().__init__(x, y, width, height, screen, text)
         self.__model = model
 
     def draw(self):
@@ -77,8 +77,8 @@ class NewGameButtonWidget(ButtonWidget):
 
 
 class ContinueButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text):
+        super().__init__(x, y, width, height, screen, text)
         self.__model = model
 
     def draw(self):
@@ -91,8 +91,8 @@ class ContinueButtonWidget(ButtonWidget):
 
 
 class LevelSelectionButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text):
+        super().__init__(x, y, width, height, screen, text)
         self.__model = model
 
     def draw(self):
@@ -105,8 +105,8 @@ class LevelSelectionButtonWidget(ButtonWidget):
 
 
 class RatingButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text):
+        super().__init__(x, y, width, height, screen, text)
         self.__model = model
 
     def draw(self):
@@ -119,8 +119,8 @@ class RatingButtonWidget(ButtonWidget):
 
 
 class BackButtonWidget(ButtonWidget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager, text, font_color=None):
-        super().__init__(x, y, width, height, screen, asset_manager, text)
+    def __init__(self, x, y, width, height, screen, model, text, font_color=None):
+        super().__init__(x, y, width, height, screen, text)
         if font_color is not None:
             self.font_color = font_color
         self.__model = model

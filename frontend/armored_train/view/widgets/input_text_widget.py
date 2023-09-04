@@ -4,8 +4,8 @@ from frontend.armored_train.view.widgets.widget import Widget
 
 
 class InputTextWidget(Widget):
-    def __init__(self, x, y, width, height, screen, model, asset_manager):
-        super().__init__(x, y, width, height, screen, asset_manager)
+    def __init__(self, x, y, width, height, screen, model):
+        super().__init__(x, y, width, height, screen)
         self.__model = model
 
     def draw(self):

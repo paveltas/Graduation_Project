@@ -1,0 +1,3 @@
+authorize: http://127.0.0.1:8000/auth/token/authorize/
+register: http://127.0.0.1:8000/auth/register/
+score: http://localhost:8000/score/

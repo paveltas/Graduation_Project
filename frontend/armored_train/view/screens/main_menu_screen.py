@@ -13,17 +13,17 @@ class MainMenuScreen(Screen):
         self.model = model
         self.__background = pygame.image.load(self.asset_manager.get_asset_path("images", "background")).convert()
 
-        self.__main_menu_screen_title = TextBoxWidget(0, 100, 0, 0, self.screen, self.asset_manager,
+        self.__main_menu_screen_title = TextBoxWidget(0, 100, 0, 0, self.screen,
                                                       'Главное Меню', center_x=True)
 
         self.__new_game_button = NewGameButtonWidget(835, 400, 250, 50, self.screen,
-                                                     self.model, self.asset_manager, 'Новая Игра')
+                                                     self.model, 'Новая Игра')
         self.__continue_button = ContinueButtonWidget(835, 500, 250, 50, self.screen,
-                                                      self.model, self.asset_manager, 'Продолжить')
+                                                      self.model, 'Продолжить')
         self.__level_selection_button = LevelSelectionButtonWidget(835, 600, 250, 50, self.screen,
-                                                                   self.model, self.asset_manager, 'Выбрать Уровень')
+                                                                   self.model, 'Выбрать Уровень')
         self.__rating_button = RatingButtonWidget(835, 700, 250, 50, self.screen,
-                                                  self.model, self.asset_manager, 'Рейтинг')
+                                                  self.model, 'Рейтинг')
 
     def draw(self):
         self.screen.blit(self.__background, (0, 0))

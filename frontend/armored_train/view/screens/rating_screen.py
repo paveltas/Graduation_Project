@@ -14,18 +14,18 @@ class RatingScreen(Screen):
         self.model = model
         self.__background = pygame.image.load(self.asset_manager.get_asset_path("images", "background")).convert()
 
-        self.__rating_screen_title = TextBoxWidget(0, 0, 0, 0, self.screen, self.asset_manager,
+        self.__rating_screen_title = TextBoxWidget(0, 0, 0, 0, self.screen,
                                                    'Рейтинг', center_x=True)
-        self.__right_alpha_rect = AlphaRectWidget(25, 100, 920, 965, self.screen, self.asset_manager, alpha=150)
-        self.__left_alpha_rect = AlphaRectWidget(975, 100, 920, 965, self.screen, self.asset_manager, alpha=150)
+        self.__right_alpha_rect = AlphaRectWidget(25, 100, 920, 965, self.screen, alpha=150)
+        self.__left_alpha_rect = AlphaRectWidget(975, 100, 920, 965, self.screen, alpha=150)
         self.__personal_overall_rating_rect = PersonalOverallRatingTextWidget(35, 110, 900, 215, self.screen,
-                                                                              self.model, self.asset_manager,
+                                                                              self.model,
                                                                               center_x=True)
         self.__general_overall_rating_rect = GeneralOverallRatingTextWidget(35, 345, 900, 709, self.screen, self.model,
                                                                             self.asset_manager)
         self.__levels_rating_rect = LevelsRatingTextWidget(985, 110, 900, 944, self.screen, self.model,
                                                            self.asset_manager, center_x=True)
-        self.__back_button = BackButtonWidget(1795, 35, 100, 50, self.screen, self.model, self.asset_manager, 'Назад')
+        self.__back_button = BackButtonWidget(1795, 35, 100, 50, self.screen, self.model, 'Назад')
 
     def draw(self):
         self.screen.blit(self.__background, (0, 0))

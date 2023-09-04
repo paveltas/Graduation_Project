@@ -4,8 +4,8 @@ from frontend.armored_train.view.widgets.widget import Widget
 
 
 class AlphaRectWidget(Widget):
-    def __init__(self, x, y, width, height, screen, asset_manager=None, alpha=128):
-        super().__init__(x, y, width, height, screen, asset_manager)
+    def __init__(self, x, y, width, height, screen, alpha=128):
+        super().__init__(x, y, width, height, screen)
         self.__surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.__alpha = alpha
 

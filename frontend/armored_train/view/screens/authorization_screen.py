@@ -11,19 +11,18 @@ class AuthorizationScreen(Screen):
         super().__init__(width, height, caption, asset_manager)
         self.caption = caption
         self.model = model
-        self.warning_text = TextBoxWidget(0, 300, 0, 0, self.screen, self.asset_manager, '', font_color=(255, 0, 0),
+        self.warning_text = TextBoxWidget(0, 300, 0, 0, self.screen, '', font_color=(255, 0, 0),
                                           center_x=True)
         self.__background = pygame.image.load(self.asset_manager.get_asset_path("images", "background")).convert()
 
-        self.__authorization_screen_title = TextBoxWidget(0, 100, 0, 0, self.screen, self.asset_manager,
+        self.__authorization_screen_title = TextBoxWidget(0, 100, 0, 0, self.screen,
                                                           'Авторизация', center_x=True)
-        self.__username_label = TextBoxWidget(600, 400, 0, 0, self.screen, self.asset_manager, 'Логин')
-        self.__password_label = TextBoxWidget(600, 500, 0, 0, self.screen, self.asset_manager, 'Пароль')
-        self.__authorization_input = InputTextWidget(760, 400, 400, 50, self.screen, self.model, self.asset_manager)
+        self.__username_label = TextBoxWidget(600, 400, 0, 0, self.screen, 'Логин')
+        self.__password_label = TextBoxWidget(600, 500, 0, 0, self.screen, 'Пароль')
+        self.__authorization_input = InputTextWidget(760, 400, 400, 50, self.screen, self.model)
         self.__authorization_button = AuthorizationButtonWidget(755, 900, 200, 50, self.screen, self.model,
-                                                                self.asset_manager, 'Авторизация')
-        self.__registration_button = RegistrationButtonWidget(965, 900, 200, 50, self.screen, self.model,
-                                                              self.asset_manager, 'Регистрация')
+                                                                'Авторизация')
+        self.__registration_button = RegistrationButtonWidget(965, 900, 200, 50, self.screen, self.model, 'Регистрация')
 
     def draw(self):
         self.screen.blit(self.__background, (0, 0))

@@ -15,13 +15,18 @@ class RatingController(Controller):
             self.model.count += 1
 
     def get_overall_score(self):
-        response = requests.get('http://localhost:8000/score/')
+        response = requests.get(self.url_data_manager.get_url_path('score'))
         data = response.json()
         if data:
             self.get_users_overall_score(data)
             self.get_levels_score(data)
 
     def get_users_overall_score(self, data):
+        # response = requests.get('http://127.0.0.1:8000/1/')
+        #
+        # users_overall_score = response.json()
+        # print(f'контроллер {users_overall_score}')
+
         dct = {}
 
         for el in data:

@@ -12,9 +12,9 @@ class LevelSelectionScreen(Screen):
         self.model = model
         self.__background = pygame.image.load(self.asset_manager.get_asset_path("images", "background")).convert()
 
-        self.__rating_screen_title = TextBoxWidget(0, 100, 0, 0, self.screen, self.asset_manager,
+        self.__rating_screen_title = TextBoxWidget(0, 100, 0, 0, self.screen,
                                                    'Выбор Уровня', center_x=True)
-        self.__back_button = BackButtonWidget(1795, 35, 100, 50, self.screen, self.model, self.asset_manager, 'Назад')
+        self.__back_button = BackButtonWidget(1795, 35, 100, 50, self.screen, self.model, 'Назад')
 
     def draw(self):
         self.screen.blit(self.__background, (0, 0))

@@ -11,9 +11,9 @@ class AuthorizationController(Controller):
         super().__init__(model, screen, screen_manager)
 
     def authorize(self):
-        url = 'http://127.0.0.1:8000/auth/token/authorize/'
+        url = self.url_data_manager.get_url_path('authorize')
         if self.model.reg_button_active:
-            url = 'http://127.0.0.1:8000/auth/register/'
+            url = self.url_data_manager.get_url_path('register')
 
         data = {
             'username': self.model.input_fields['login'],

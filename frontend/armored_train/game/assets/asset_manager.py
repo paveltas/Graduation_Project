@@ -1,18 +1,18 @@
-import json
+import yaml
 
 
 class AssetManager:
-    def __init__(self, json_file_path):
-        self.__json_file_path = json_file_path
+    def __init__(self, yaml_file_path):
+        self.__yaml_file_path = yaml_file_path
         self.__assets = {}
 
     def load_assets(self):
-        with open(self.__json_file_path, 'r') as file:
-            self.__assets = json.load(file)
+        with open(self.__yaml_file_path, 'r') as file:
+            self.__assets = yaml.load(file, Loader=yaml.FullLoader)
 
     def save_assets(self):
-        with open(self.__json_file_path, 'w') as file:
-            json.dump(self.__assets, file)
+        with open(self.__yaml_file_path, 'w') as file:
+            yaml.dump(self.__assets, file)
 
     def add_asset(self, asset_type, asset_name, asset_path):
         if asset_type not in self.__assets:
@@ -28,7 +28,7 @@ class AssetManager:
             del self.__assets[asset_type][asset_name]
 
 
-# asset_manager = AssetManager("assets.json")
+# asset_manager = AssetManager("assets.yaml")
 # asset_manager.load_assets()
 #
 # new_assets = [{"type": 'images', "name": 'heavy_enemy',
