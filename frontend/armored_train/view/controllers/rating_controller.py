@@ -22,10 +22,10 @@ class RatingController(Controller):
             self.get_levels_score(data)
 
     def get_users_overall_score(self, data):
-        # response = requests.get('http://127.0.0.1:8000/1/')
-        #
-        # users_overall_score = response.json()
-        # print(f'контроллер {users_overall_score}')
+        response = requests.get('http://127.0.0.1:8000/1/')
+
+        users_overall_score = response.json()
+        print(f'контроллер {users_overall_score}')
 
         dct = {}
 

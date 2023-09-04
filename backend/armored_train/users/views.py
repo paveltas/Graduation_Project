@@ -1,5 +1,6 @@
 import json
 
+from django.core import serializers
 from django.contrib.auth.models import User
 from django.db.models import Sum, F, Window
 from django.db.models.functions import DenseRank
@@ -53,27 +54,18 @@ class RegistrationView(APIView):
 
 
 def rating_view(request):
-    # Получение логина залогиненного пользователя
     user = request.user
     user_score = Score.objects.filter(player=user)
-    print(f'user_score {user_score}')
 
-    # Получение общего количества очков залогиненного пользователя по всем уровням
     total_points = user_score.aggregate(total_points=Sum('points'))
-    print(f'total_points {total_points}')
 
     users_scores = (
         Score.objects
         .values('player')
         .annotate(total_points=Sum('points'))
     )
-    print(f"users_score {users_scores}")
-
-    # Получение места залогиненного пользователя среди всех остальных пользователей
 
     user_place = sum(1 for el in users_scores if el['total_points'] > total_points['total_points']) + 1
-
-    # Получение данных всех пользователей
 
     all_users_scores = (
         Score.objects
@@ -84,11 +76,9 @@ def rating_view(request):
         .values('player_username', 'total_points', 'place')
     )
 
-    users_overall_score = [(el['place'], el['player_username'], el['total_points']) for el in all_users_scores]
+    json_data = serializers.serialize('json', all_users_scores)
+    print(json_data, type(json_data))
 
-    print(f'json.dumps {json.dumps(users_overall_score)}')
-
-    print(f'users_overall_score {users_overall_score}')
     # по каждому уровню
     # all_users_scores = (
     #     Score.objects
@@ -107,4 +97,4 @@ def rating_view(request):
     #                'all_users_scores': all_users_scores}
     #               )
 
-    return json.dumps(users_overall_score)
+    return json.dumps(all_users_scores)

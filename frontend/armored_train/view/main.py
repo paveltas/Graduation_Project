@@ -33,8 +33,6 @@ def main():
     authorization_screen = AuthorizationScreen(1920, 1080, 'Authorization Screen', model, asset_manager)
     authorization_controller = AuthorizationController(model, authorization_screen, screen_manager)
     screen_manager.add_screen_add_controller(authorization_screen, authorization_controller)
-    print(authorization_screen.__dict__)
-    # print(authorization_screen.width)
 
     model = RatingModel()
     rating_screen = RatingScreen(1920, 1080, 'Rating Screen', model, asset_manager)
