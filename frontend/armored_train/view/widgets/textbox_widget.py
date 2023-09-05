@@ -58,47 +58,46 @@ class PersonalOverallRatingTextWidget(TextBoxWidget):
 class GeneralOverallRatingTextWidget(TextBoxWidget):
     def __init__(self, x, y, width, height, screen, model, text=None, center_x=False, center_y=False):
         super().__init__(x, y, width, height, screen, text)
-        self.__main_rect = None
         self.__model = model
-        self.__scroll_position = 0
-        self.__items_size = 50
-        self.__items_per_screen = self.height // self.__items_size
         self.center_x = center_x
         self.center_y = center_y
 
     def draw(self):
-        self.__main_rect = pygame.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height),
-                                            self.border_width)
-
-        start_index = self.__scroll_position // self.__items_size
-        end_index = start_index + self.__items_per_screen
+        scroll_position = 0
+        items_size = 50
+        items_per_screen = self.height // items_size
+        main_rect = pygame.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height),
+                                     self.border_width)
+        start_index = scroll_position // items_size
+        end_index = start_index + items_per_screen
 
         if self.__model.users_overall_score:
             visible_items = self.__model.users_overall_score[start_index:end_index]
 
             for i, item in enumerate(visible_items):
-                item_text = self.text_font.render(f'{item[0]} место {item[2]:>42} очков  {item[1]:>45}', True,
-                                                  self.font_color)
+                item_text = self.text_font.render(
+                    f'{item["place"]} место {item["player_username"]:>42} очков  {item["total_points"]:>45}', True,
+                    self.font_color)
                 item_x = self.x + 10
-                item_y = self.y + (i * self.__items_size)
+                item_y = self.y + (i * items_size)
                 self.screen.blit(item_text, (item_x, item_y))
 
-            self.__handle_event()
+            self.__handle_event(main_rect, items_size, scroll_position, items_per_screen)
 
-    def __handle_event(self):
-        can_scroll_up = self.__scroll_position != 0
-        can_scroll_down = self.__scroll_position != (
-                len(self.__model.users_overall_score) - self.__items_per_screen) * self.__items_size
+    def __handle_event(self, main_rect, items_size, scroll_position, items_per_screen):
+        can_scroll_up = scroll_position != 0
+        can_scroll_down = scroll_position != (
+                len(self.__model.users_overall_score) - items_per_screen) * items_size
 
         for event in pygame.event.get():
             mouse_pos = pygame.mouse.get_pos()
-            if self.__main_rect.collidepoint(mouse_pos):
+            if main_rect.collidepoint(mouse_pos):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 4 and can_scroll_up:
-                        self.__scroll_position -= self.__items_size
+                        scroll_position -= items_size
                     elif event.button == 5 and can_scroll_down:
-                        if len(self.__model.users_overall_score) > self.__items_per_screen:
-                            self.__scroll_position += self.__items_size
+                        if len(self.__model.users_overall_score) > items_per_screen:
+                            scroll_position += items_size
 
 
 class LevelsRatingTextWidget(TextBoxWidget):
