@@ -2,6 +2,7 @@ import json
 
 import pygame
 import requests
+import yaml
 
 from frontend.armored_train.view.controllers.controller import Controller
 
@@ -19,27 +20,28 @@ class AuthorizationController(Controller):
             'username': self.model.input_fields['login'],
             'password': self.model.input_fields['password']
         }
+        try:
+            if data['username'] and data['password']:
+                headers = {'Content-type': 'application/json'}
+                response = requests.post(url, data=json.dumps(data), headers=headers)
 
-        if data['username'] and data['password']:
-            headers = {'Content-type': 'application/json'}
-            response = requests.post(url, data=json.dumps(data), headers=headers)
-
-            if response.status_code == 200:
-                self.model.token = response.json().get('token')
-                print(f'Успешная авторизация. Токен: {self.model.token}')
-                self.screen.warning_text.text = f'Успешная авторизация. Токен: {self.model.token}'
-                self.screen_manager.set_active_screen('Main Menu Screen')
-            if response.status_code == 401:
-                self.screen.warning_text.text = 'Пожалуйста проверьте введенные данные или пройдите регистрацию.'
-            if response.status_code == 201:
-                print("Регистрация прошла успешно")
-                self.screen.warning_text.text = 'Регистрация прошла успешно.'
-                self.screen_manager.set_active_screen('Main Menu Screen')
-            if response.status_code == 409:
-                print("Произошла ошибка при регистрации")
-                self.screen.warning_text.text = 'Пользователь с такими данными уже есть.'
-        else:
-            self.screen.warning_text.text = 'Пожалуйста заполните оба поля.'
+                if response.status_code == 200:
+                    self.model.token = response.json().get('token')
+                    with open(self.path_data_manager.get_path('config.yaml'), "w") as file:
+                        yaml.dump({"authorization_token": response.json().get('token')}, file, indent=4)
+                    self.screen_manager.set_active_screen('Main Menu Screen')
+                if response.status_code == 401:
+                    self.screen.warning_text.text = 'Пожалуйста проверьте введенные данные или пройдите регистрацию.'
+                if response.status_code == 201:
+                    self.screen.warning_text.text = 'Регистрация прошла успешно.'
+                    self.screen_manager.set_active_screen('Main Menu Screen')
+                if response.status_code == 409:
+                    self.screen.warning_text.text = 'Пользователь с такими данными уже есть.'
+            else:
+                self.screen.warning_text.text = 'Пожалуйста заполните оба поля.'
+        except requests.exceptions.ConnectionError as e:
+            self.screen.warning_text.text = 'Ошибка подключения.'
+            print("Ошибка подключения:", str(e))
 
         self.model.input_fields['login'] = ''
         self.model.input_fields['password'] = ''

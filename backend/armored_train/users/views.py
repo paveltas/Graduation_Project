@@ -37,10 +37,6 @@ class AuthorizationView(APIView):
         return Response({'error': 'Invalid credentials'}, status=401)
 
 
-# class AuthorizationView(TokenCreateView):
-#     pass
-
-
 class RegistrationView(APIView):
     @staticmethod
     def post(request):
@@ -55,46 +51,27 @@ class RegistrationView(APIView):
         return JsonResponse({'success': 'User registered successfully'}, status=201)
 
 
-class RatingView(APIView):
-    def get(self, request):
-        user = request.user
-        # if not isinstance(user, int):
-        #     print(user, type(user))
-        #     user = 2
-        print(user)
-        user_score = Score.objects.filter(player=user)
+class UserOverallScoreView(APIView):
+    @staticmethod
+    def get(request):
+        user = str(request.user)
 
-        total_points = user_score.aggregate(total_points=Sum('points'))
-        print(total_points['total_points'])
+        all_users_scores = get_all_users_scores()
 
-        users_scores = (
-            Score.objects
-            .values('player')
-            .annotate(total_points=Sum('points'))
-        )
+        for el in all_users_scores:
+            if el['player_username'] == user:
+                try:
+                    return JsonResponse(el, status=200, safe=False, json_dumps_params={'ensure_ascii': False})
+                except json.JSONDecodeError as e:
+                    print(f"Ошибка: {e}")
 
-        user_place = sum(1 for el in users_scores if el['total_points'] > total_points['total_points']) + 1
 
-        all_users_scores = (
-            Score.objects
-            .annotate(player_username=F('player__username'))
-            .annotate(total_points=Sum('player__score__points'))
-            .order_by('-total_points')
-            .annotate(place=Window(expression=DenseRank(), order_by=F('total_points').desc()))
-            .values('player_username', 'total_points', 'place')
-            .distinct()
-        )
+class UsersOverallScoreView(APIView):
+    @staticmethod
+    def get(request):
+        all_users_scores = get_all_users_scores()
 
-        results = list(all_users_scores)
-        json_data = json.dumps(results)
-
-        # return render(request, 'test.html',
-        #               {'user_score': user_score,
-        #                'user_login': user.username,
-        #                'total_points': total_points['total_points'],
-        #                'user_place': user_place,
-        #                'all_users_scores': all_users_scores}
-        #               )
+        json_data = json.dumps(list(all_users_scores))
 
         try:
             json.loads(json_data)
@@ -104,12 +81,26 @@ class RatingView(APIView):
             print("Данные не являются валидным JSON.")
             print(f"Ошибка: {e}")
 
-        # по каждому уровню
-        # all_users_scores = (
-        #     Score.objects
-        #     .annotate(player_username=F('player__username'))
-        #     .annotate(total_points=Sum('points'))
-        #     .order_by('-total_points')
-        #     .annotate(place=Window(expression=DenseRank(), order_by=F('total_points').desc()))
-        #     .values('player_username', 'total_points', 'place')
-        # )
+
+# class LevelsOverallScoreView(APIView):
+#     def get(self):
+#         all_users_scores = (
+#             Score.objects
+#             .annotate(player_username=F('player__username'))
+#             .annotate(points=Sum('points'))
+#             .order_by('-points')
+#             .annotate(place=Window(expression=DenseRank(), order_by=F('points').desc()))
+#             .values('player_username', 'points', 'place')
+#         )
+
+
+def get_all_users_scores():
+    return (
+        Score.objects
+        .annotate(player_username=F('player__username'))
+        .annotate(total_points=Sum('player__score__points'))
+        .order_by('-total_points')
+        .annotate(place=Window(expression=DenseRank(), order_by=F('total_points').desc()))
+        .values('player_username', 'total_points', 'place')
+        .distinct()
+    )

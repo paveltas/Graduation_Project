@@ -103,8 +103,7 @@ class GeneralOverallRatingTextWidget(TextBoxWidget):
 class LevelsRatingTextWidget(TextBoxWidget):
     def __init__(self, x, y, width, height, screen, model, text=None, center_x=False, center_y=False):
         super().__init__(x, y, width, height, screen, text)
-        self.__main_rect = None
-        self.__login = model.login
+        self.__model = model
         self.__levels_score = model.levels_score
         self.__scroll_position = 0
         self.__items_size = 180
@@ -113,9 +112,9 @@ class LevelsRatingTextWidget(TextBoxWidget):
         self.center_y = center_y
 
     def draw(self):
-        self.__main_rect = pygame.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height),
-                                            self.border_width)
-        if self.__levels_score:
+        main_rect = pygame.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height),
+                                     self.border_width)
+        if self.__levels_score and self.__model.login:
             start_key = self.__scroll_position // self.__items_size
             end_key = start_key + self.__items_per_screen if self.__items_per_screen < len(
                 self.__levels_score) else len(
@@ -127,9 +126,9 @@ class LevelsRatingTextWidget(TextBoxWidget):
                     if value[0] == 1:  # находим игрока на 1 месте.
                         item_text_level = self.text_font.render(f'Уровень {key}', True, self.font_color)
                         item_text_user_place = self.text_font.render(
-                            f'Вы заняли {self.__levels_score[key][self.__login][0]} место', True, self.font_color)
+                            f'Вы заняли {self.__levels_score[key][self.__model.login][0]} место', True, self.font_color)
                         item_text_user_score = self.text_font.render(
-                            f'И набрали {self.__levels_score[key][self.__login][1]} очков', True, self.font_color)
+                            f'И набрали {self.__levels_score[key][self.__model.login][1]} очков', True, self.font_color)
                         item_text_user_best_score = self.text_font.render(
                             f'Лучший счет  составляет {value[1]} очков. Его достиг игрок - {login}', True,
                             self.font_color)
@@ -147,9 +146,9 @@ class LevelsRatingTextWidget(TextBoxWidget):
                             self.align((self.width, self.height), item_text_user_best_score)[0], item_y + 135))
                         count += 1
 
-            self.__handle_event()
+            self.__handle_event(main_rect)
 
-    def __handle_event(self):
+    def __handle_event(self, main_rect):
         can_scroll_up = self.__scroll_position != 0
         can_scroll_down = self.__scroll_position != (
                 len(self.__levels_score) - self.__items_per_screen) * self.__items_size
@@ -157,7 +156,7 @@ class LevelsRatingTextWidget(TextBoxWidget):
         events = pygame.event.get()
         for event in events:
             mouse_pos = pygame.mouse.get_pos()
-            if self.__main_rect.collidepoint(mouse_pos):
+            if main_rect.collidepoint(mouse_pos):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 4 and can_scroll_up:
                         self.__scroll_position -= self.__items_size

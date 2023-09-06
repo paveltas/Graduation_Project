@@ -1,6 +1,11 @@
-import requests
-
 import json
+import os
+import threading
+import time
+
+import requests
+import yaml
+
 from frontend.armored_train.view.controllers.controller import Controller
 
 
@@ -11,43 +16,52 @@ class RatingController(Controller):
     def handle_event(self, event):
         if self.model.back_button_active:
             self.screen_manager.set_active_screen('Main Menu Screen')
-        while self.model.count == 0:
-            self.get_overall_score()
-            self.model.count += 1
 
-    def get_overall_score(self):
-        response = requests.get(self.url_data_manager.get_url_path('score'))
-        data = response.json()
-        if data:
-            self.get_users_overall_score(data)
-            self.get_levels_score(data)
+        def repeated_tasks():
+            self.get_users_overall_score()
+            self.get_user_overall_score()
+            self.get_levels_score()
+            time.sleep(10)
 
-    def get_users_overall_score(self, data):
-        response = requests.get('http://127.0.0.1:8000/1/')
+        thread = threading.Thread(target=repeated_tasks)
+        thread.start()
+
+    def get_user_overall_score(self):
+        with open(self.path_data_manager.get_path('config.yaml')) as config_file:
+            config_data = yaml.load(config_file, Loader=yaml.FullLoader)
+
+        url = self.url_data_manager.get_url_path('user_rating')
+        headers = {
+            'Authorization': f'Token {config_data["authorization_token"]}'
+        }
+
+        response = requests.get(url, headers=headers)
+
         try:
             response_json = response.json()
-            print("Данные являются валидным JSON.")
-            users_overall_score = response_json
-            print(f'контроллер {users_overall_score}')
-            self.model.users_overall_score = users_overall_score
+            print("Данные являются валидным JSON. user")
+            self.model.login = response_json['player_username']
+            self.model.user_place = response_json['place']
+            self.model.user_overall_score = response_json['total_points']
         except json.JSONDecodeError as e:
-            print("Данные не являются валидным JSON.")
+            print("Данные не являются валидным JSON. user")
             print(f"Ошибка: {e}")
 
-        dct = {}
+    def get_users_overall_score(self):
+        response = requests.get(self.url_data_manager.get_url_path('users_rating'))
 
-        for el in data:
-            dct[el['player_name']] = dct.get(el['player_name'], 0) + el['points']
+        try:
+            response_json = response.json()
+            print("Данные являются валидным JSON. users")
+            self.model.users_overall_score = response_json
+        except json.JSONDecodeError as e:
+            print("Данные не являются валидным JSON. users")
+            print(f"Ошибка: {e}")
 
-        # self.model.users_overall_score = [(i, k, v) for i, (k, v) in
-        #                                   enumerate(sorted(dct.items(), key=lambda item: item[1], reverse=True),
-        #                                             start=1)]
+    def get_levels_score(self):
+        response = requests.get(self.url_data_manager.get_url_path('score'))
+        data = response.json()
 
-        print(f'self.model.users_overall_score {self.model.users_overall_score}')
-        self.model.user_overall_score = dct[self.model.login]
-        self.model.user_place = 3
-
-    def get_levels_score(self, data):
         dct = {}
 
         for el in data:
@@ -58,4 +72,5 @@ class RatingController(Controller):
 
         for k, v in dct.items():
             self.model.levels_score[k] = {k: (i, v) for i, (k, v) in
-                                          enumerate(sorted(v.items(), key=lambda item: item[1], reverse=True), start=1)}
+                                          enumerate(sorted(v.items(), key=lambda item: item[1], reverse=True),
+                                                    start=1)}

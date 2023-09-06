@@ -49,7 +49,7 @@ def main():
     first_level_controller = FirstLevelController(model, first_level_screen, screen_manager)
     screen_manager.add_screen_add_controller(first_level_screen, first_level_controller)
 
-    screen_manager.set_active_screen('Main Menu Screen')
+    screen_manager.set_active_screen('Authorization Screen')
 
     clock = pygame.time.Clock()
 

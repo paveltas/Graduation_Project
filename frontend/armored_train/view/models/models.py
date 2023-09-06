@@ -3,8 +3,6 @@ class AuthorizationModel:
         self.active_box = None
         self.auth_button_active = False
         self.reg_button_active = False
-        self.token = None
-
         self.input_fields = {'login': '', 'password': ''}
 
 
@@ -19,12 +17,11 @@ class MainMenuModel:
 
 class RatingModel:
     def __init__(self):
-        self.login = 'pavel'
+        self.login = None
         self.user_place = 0
         self.user_overall_score = 0
         self.users_overall_score = None
         self.levels_score = {}
-        self.count = 0
         self.level = None
         self.points = None
         self.back_button_active = False
@@ -38,3 +35,4 @@ class LevelSelectionModel:
 class FirstLevelModel:
     def __init__(self):
         self.enemies = []
+        self.wagons = []

@@ -11,37 +11,36 @@ class FirstLevelScreen(Screen):
     def __init__(self, width: int, height: int, caption: str, model, asset_manager):
         super().__init__(width, height, caption, asset_manager)
         self.caption = caption
-        self.model = model
+        self.__model = model
         self.__background = pygame.image.load(self.asset_manager.get_asset_path("images", "first_level")).convert()
-        self.enemy_spawn_timer = pygame.time.get_ticks()
-        self.enemy_spawn_delay = 1000
+        self.__enemy_spawn_timer = pygame.time.get_ticks()
+        self.__enemy_spawn_delay = 1000
 
-        self.locomotive = LocomotiveObject(914, 50, self.screen, self.asset_manager)
-        self.engineering_wagon = EngineeringWagonObject(905, 270, self.screen, self.asset_manager)
-        self.wagon1 = WagonObject(923, 408, self.screen, self.asset_manager)
-        self.wagon2 = WagonObject(923, 536, self.screen, self.asset_manager)
-        self.wagon3 = WagonObject(923, 664, self.screen, self.asset_manager)
-        self.wagon4 = WagonObject(923, 792, self.screen, self.asset_manager)
-        self.wagon5 = WagonObject(923, 920, self.screen, self.asset_manager)
+        self.__locomotive = LocomotiveObject(914, 50, self.screen, self.asset_manager)
+        self.__engineering_wagon = EngineeringWagonObject(905, 270, self.screen, self.asset_manager)
 
     def draw(self):
         self.screen.blit(self.__background, (0, 0))
 
-        self.locomotive.draw()
-        self.engineering_wagon.draw()
-        self.wagon1.draw()
-        self.wagon2.draw()
-        self.wagon3.draw()
-        self.wagon4.draw()
-        self.wagon5.draw()
+        self.__locomotive.draw()
+        self.__engineering_wagon.draw()
+
+        wagon_y = 408
+        for _ in range(5):
+            wagon = WagonObject(923, wagon_y, self.screen, self.asset_manager)
+            self.__model.wagons.append(wagon)
+            wagon_y += 128
+
+        for wagon in self.__model.wagons:
+            wagon.draw()
 
         current_time = pygame.time.get_ticks()
-        if current_time - self.enemy_spawn_timer >= self.enemy_spawn_delay:
+        if current_time - self.__enemy_spawn_timer >= self.__enemy_spawn_delay:
             enemy = LightEnemyObject(780, 1080, self.screen, self.asset_manager)
-            self.model.enemies.append(enemy)
-            self.enemy_spawn_timer = current_time
+            self.__model.enemies.append(enemy)
+            self.__enemy_spawn_timer = current_time
 
-        for enemy in self.model.enemies:
+        for enemy in self.__model.enemies:
             enemy.draw()
 
         pygame.display.flip()

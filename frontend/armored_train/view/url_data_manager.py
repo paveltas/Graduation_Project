@@ -26,15 +26,17 @@ class URLManager:
             del self.__urls[url_name]
 
 
-# url_manager = URLManager("urls_data.yaml")
-# url_manager.load_urls()
-#
-# new_urls = [{'name': 'authorize', 'path': 'http://127.0.0.1:8000/auth/token/authorize/'},
-#             {'name': 'register', 'path': 'http://127.0.0.1:8000/auth/register/'},
-#             {'name': 'score', 'path': 'http://localhost:8000/score/'}
-#             ]
-#
-# for url in new_urls:
-#     url_manager.add_url(url["name"], url["path"])
-#
-# url_manager.save_urls()
+url_manager = URLManager("urls_data.yaml")
+url_manager.load_urls()
+
+new_urls = [{'name': 'authorize', 'path': 'http://127.0.0.1:8000/auth/token/authorize/'},
+            {'name': 'register', 'path': 'http://127.0.0.1:8000/auth/register/'},
+            {'name': 'score', 'path': 'http://localhost:8000/score/'},
+            {'name': 'users_rating', 'path': 'http://127.0.0.1:8000/users_rating/'},
+            {'name': 'user_rating', 'path': 'http://127.0.0.1:8000/user_rating/'},
+            ]
+
+for url in new_urls:
+    url_manager.add_url(url["name"], url["path"])
+
+url_manager.save_urls()

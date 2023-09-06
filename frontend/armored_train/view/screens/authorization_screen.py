@@ -10,19 +10,19 @@ class AuthorizationScreen(Screen):
     def __init__(self, width: int, height: int, caption: str, model, asset_manager):
         super().__init__(width, height, caption, asset_manager)
         self.caption = caption
-        self.model = model
+        self.__model = model
         self.warning_text = TextBoxWidget(0, 300, 0, 0, self.screen, '', font_color=(255, 0, 0),
                                           center_x=True)
         self.__background = pygame.image.load(self.asset_manager.get_asset_path("images", "background")).convert()
 
-        self.__authorization_screen_title = TextBoxWidget(0, 100, 0, 0, self.screen,
-                                                          'Авторизация', center_x=True)
+        self.__authorization_screen_title = TextBoxWidget(0, 100, 0, 0, self.screen, 'Авторизация', center_x=True)
         self.__username_label = TextBoxWidget(600, 400, 0, 0, self.screen, 'Логин')
         self.__password_label = TextBoxWidget(600, 500, 0, 0, self.screen, 'Пароль')
-        self.__authorization_input = InputTextWidget(760, 400, 400, 50, self.screen, self.model)
-        self.__authorization_button = AuthorizationButtonWidget(755, 900, 200, 50, self.screen, self.model,
+        self.__authorization_input = InputTextWidget(760, 400, 400, 50, self.screen, self.__model)
+        self.__authorization_button = AuthorizationButtonWidget(755, 900, 200, 50, self.screen, self.__model,
                                                                 'Авторизация')
-        self.__registration_button = RegistrationButtonWidget(965, 900, 200, 50, self.screen, self.model, 'Регистрация')
+        self.__registration_button = RegistrationButtonWidget(965, 900, 200, 50, self.screen, self.__model,
+                                                              'Регистрация')
 
     def draw(self):
         self.screen.blit(self.__background, (0, 0))

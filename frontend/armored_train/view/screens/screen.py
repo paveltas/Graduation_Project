@@ -3,17 +3,6 @@ from abc import ABC, abstractmethod
 import pygame
 
 
-# class SuperPrivateDescriptor:
-#     def __set_name__(self, owner, name):
-#         self.name = '__' + name
-#
-#     def __get__(self, instance, owner):
-#         return getattr(instance, self.name)
-#
-#     def __set__(self, instance, value):
-#         setattr(instance, self.name, value)
-
-
 class Screen(ABC):
     def __init__(self, width: int, height: int, caption: str, asset_manager):
         pygame.init()
